@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#24132f">
+<meta name="description" content="Una sorpresa especial para Lii.">
+<title>Para Lii ❤️</title>
+<style>
+:root{color-scheme:dark;--pink:#ff8fbd;--pale:#ffe2ef;--purple:#b7a0ff}
+*{box-sizing:border-box}
+body{margin:0;min-height:100svh;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#fff4fa;background:radial-gradient(ellipse at top,#623b70 0%,#2c1b42 42%,#140f26 100%);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.45;background-image:radial-gradient(2px 2px at 20% 25%,white 50%,transparent 60%),radial-gradient(1px 1px at 70% 18%,white 50%,transparent 60%),radial-gradient(2px 2px at 83% 60%,#ffd6ed 50%,transparent 60%),radial-gradient(1px 1px at 36% 76%,white 50%,transparent 60%),radial-gradient(2px 2px at 58% 44%,#e4d8ff 50%,transparent 60%);background-size:230px 210px}
+main{position:relative;z-index:1;min-height:100svh;display:grid;place-items:center;padding:24px 16px}
+.card{width:min(100%,480px);padding:clamp(24px,6vw,38px);text-align:center;border:1px solid #ffffff27;border-radius:28px;background:#ffffff0e;box-shadow:0 22px 80px #08041270;backdrop-filter:blur(12px)}
+.kicker{letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;color:#f7c8e1}
+h1{font-size:clamp(2rem,9vw,3.3rem);line-height:1.08;margin:14px 0;color:#fff}
+p{line-height:1.7;color:#f8e6f1}
+.heart{font-size:4rem;filter:drop-shadow(0 0 22px #ff76b8);animation:pulse 1.8s infinite}
+button{font:inherit;font-weight:700;border:0;border-radius:999px;padding:14px 22px;margin:8px 4px;min-height:48px;cursor:pointer;color:#381a35;background:linear-gradient(135deg,#ffd9ea,#ff8fbd);box-shadow:0 8px 24px #ff8fbd32;transition:transform .2s}
+button:active{transform:scale(.97)}
+button.secondary{background:#ffffff12;color:#fff;border:1px solid #ffffff38;box-shadow:none}
+button:focus-visible{outline:3px solid white;outline-offset:3px}
+.hidden{display:none!important}
+.envelope{font-size:5rem;cursor:pointer;display:inline-block;animation:float 2.5s ease-in-out infinite;user-select:none}
+.message{margin:20px 0;padding:18px;border-radius:18px;background:#ffffff10;border:1px solid #ffffff25;white-space:pre-line}
+.footer{font-size:.8rem;color:#d7bfd5;margin-top:24px}
+.heartbit{position:fixed;z-index:2;bottom:-40px;pointer-events:none;animation:rise 4.5s linear forwards;filter:drop-shadow(0 0 7px #ff9ecb)}
+@keyframes pulse{50%{transform:scale(1.1)}}
+@keyframes float{50%{transform:translateY(-9px) rotate(-3deg)}}
+@keyframes rise{to{transform:translateY(-115svh) rotate(25deg);opacity:0}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main>
+<section class="card" id="start">
+  <div class="kicker">Una pequeña sorpresa para ti</div>
+  <div class="heart" aria-hidden="true">♥</div>
+  <h1>Hola, Lii ✨</h1>
+  <p>Hay algo que llevo en el corazón y quiero que lo descubras.</p>
+  <button id="begin">Toca aquí, bonita 💌</button>
+  <div class="footer">Hecho con cariño, solo para ti.</div>
+</section>
+
+<section class="card hidden" id="letter">
+  <div class="kicker">Abre tu mensajito</div>
+  <h1>Un sobre para ti 💗</h1>
+  <p>Toca el sobre para descubrir lo que quiero decirte.</p>
+  <button class="secondary envelope" id="openLetter" aria-label="Abrir la carta">💌</button>
+  <div id="letterText" class="message hidden">Lii, a veces quisiera tenerte cerquita para abrazarte y contarte todo lo que siento. Aunque ahora nos separen la distancia o el tiempo, hay momentos en los que simplemente me haces falta.</div>
+  <button id="continue" class="hidden">Hay algo más… 🌙</button>
+</section>
+
+<section class="card hidden" id="final">
+  <div class="kicker">De mí para ti</div>
+  <div class="heart" aria-hidden="true">💖</div>
+  <h1>Te extraño mucho, Lii</h1>
+  <p>Aunque no estés aquí, estás en mis pensamientos. Ojalá pudiera darte un abrazo ahora mismo y quedarme un ratito ahí. ❤️</p>
+  <div class="message">Si pudiera pedir un deseo ahora, sería tenerte cerca, verte sonreír y recordarte lo especial que eres para mí.</div>
+  <button id="hearts">Lluvia de corazones 💕</button>
+  <button class="secondary" id="again">Volver a leer ↻</button>
+  <div class="footer">Esta sorpresa es tuya. ❤️</div>
+</section>
+</main>
+<script>
+const start=document.querySelector("#start"),letter=document.querySelector("#letter"),finalPage=document.querySelector("#final");
+function show(section){[start,letter,finalPage].forEach(s=>s.classList.add("hidden"));section.classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+document.querySelector("#begin").addEventListener("click",()=>show(letter));
+document.querySelector("#openLetter").addEventListener("click",()=>{
+  document.querySelector("#letterText").classList.remove("hidden");
+  document.querySelector("#continue").classList.remove("hidden");
+  document.querySelector("#openLetter").textContent="💖";
+  burst(12);
+});
+document.querySelector("#continue").addEventListener("click",()=>{show(finalPage);burst(20)});
+document.querySelector("#hearts").addEventListener("click",()=>burst(35));
+document.querySelector("#again").addEventListener("click",()=>{show(start);document.querySelector("#letterText").classList.add("hidden");document.querySelector("#continue").classList.add("hidden");document.querySelector("#openLetter").textContent="💌"});
+function burst(count){for(let i=0;i<count;i++){setTimeout(()=>{const el=document.createElement("span");el.className="heartbit";el.textContent=["💗","💕","💖","❤️","✨"][Math.floor(Math.random()*5)];el.style.left=Math.random()*100+"vw";el.style.fontSize=(18+Math.random()*24)+"px";el.style.animationDuration=(3+Math.random()*3)+"s";document.body.appendChild(el);setTimeout(()=>el.remove(),6500)},i*55)}}
+</script>
+</body>
+</html>
